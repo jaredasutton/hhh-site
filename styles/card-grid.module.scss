@@ -1,0 +1,50 @@
+.CardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2em;
+  .Card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+    --pic-width: calc(100vw / 3 - 6em - 10px);
+    .CardHeader {
+      font-weight: bold;
+      font-size: 1.25em;
+    }
+    > :global(#pic) {
+      border-radius: 100%;
+      color: white;
+      width: var(--pic-width);
+      height: var(--pic-width);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-repeat: no-repeat;
+      background-color: lightgray;
+      background-position: center;
+    }
+    :global(#card-content) {
+      width: var(--pic-width);
+    }
+  }
+  @media (max-width: 768px) {
+    & {
+      grid-template-columns: 1fr;
+      .Card {
+        --pic-width: 80vw;
+        > :global(#pic) {
+          width: var(--pic-width);
+          height: var(--pic-width);
+        }
+        :global(#card-content) {
+          width: var(--pic-width);
+        }
+        &:last-of-type {
+          grid-column: 1;
+        }
+      }
+    }
+  }
+}

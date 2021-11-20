@@ -1,0 +1,32 @@
+.RoadMap {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  --progress-color-green: 107;
+  .Milestone {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    > * {
+      border: 1px solid black;
+    }
+    .ProgressPct {
+      padding: 1em;
+      width: 60px;
+      border-top-left-radius: 1em;
+      border-bottom-left-radius: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      background: black;
+      color: white;
+    }
+    .MilestoneContent {
+      padding: 1em;
+      border-top-right-radius: 1em;
+      border-bottom-right-radius: 1em;
+      line-height: 1.5rem;
+    }
+  }
+}
