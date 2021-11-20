@@ -68,5 +68,41 @@ export const createMinter = (mainnet = true) => {
       };
     }
   };
+  minter.mintNFT = async (count = 1) => {
+    const nftContract = new web3.eth.Contract(contractABI, contractAddress);
+    const currentNFTPrice = web3.utils.toWei(String(count * 0.03), 'ether');
+    const [selectedAddress] = await window.ethereum.request({
+      method: 'eth_requestAccounts',
+    });
+    // Gas estimation
+    let gasEstimate;
+    try {
+      gasEstimate = await nftContract.methods
+        .mint()
+        .estimateGas({ from: selectedAddress, value: currentNFTPrice });
+    } catch (error) {
+      console.log('gas estimate: ', error);
+      alert(
+        `Insufficient funds to Mint ${count} NFT you need ${String(
+          count * 0.03
+        )} ETH`
+      );
+      return {
+        success: false,
+        errMsg: error.message,
+      };
+    }
+    try {
+      const {transactionHash: txHash} = await nftContract.methods.mint().send({
+        from: selectedAddress,
+        value: currentNFTPrice,
+        gasLimit: gasEstimate,
+      });
+      return { success: true, txHash };
+    } catch (error) {
+      return { success: false, errMsg: error.message };
+    }
+  };
+
   return minter;
 };
